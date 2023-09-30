@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
+
+
+
+.wrapper {
+ height: 100vh;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  background: #6c7b2a;
+ /* overflow: hidden; */
+}
+
+.game-wrapper {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+     position: relative;
+     overflow: hidden;
+}
+
+.road {
+    background: #817f84;
+    width: 300px;
+    height: 100vh;
+}
+
+.car {
+    position: absolute;
+    bottom: 0;
+    width: 50px;
+}
+
+.tree {
+   
+   position: absolute;
+}
+
+.tree1 {
+   
+    transform: translate(-220px, -10vh);
+    width: 200px;
+}
+.tree2 {
+    
+    transform: translate(-240px, 20vh);
+    width: 220px;
+}
+.tree3 {
+    
+    transform: translate(-200px, 65vh);
+    width: 180px;
+}
+.tree4 {
+    transform: translate(240px, -20vh);
+    width: 210px;
+}
+.tree5 {
+    transform: translate(200px, 10vh);
+    width: 200px;
+}
+.tree6 {
+    transform: translate(210px, 57vh);
+    width: 150px;
+}
+
+.game-button {
+    position: fixed;
+    right: 100px;
+    top: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.game-button:hover {
+    transform: scale(1.2);
+}
+
+.game-button img {
+    width: 60px;
+    height: 60px;
+}
+
+.danger {
+    position: absolute;
+    width: 80px;
+}
+
+.coin {
+    position: absolute;
+    width: 50px;
+}
+
+.arrow {
+    position: absolute;
+    width: 50px;
+}
+
+
+
+footer {
+   /* width: 100%; */
+  width: 1200px;
+  height: 10vh;
+  display: flex;  
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid black; 
+  padding: 10px 100px; 
+  color: rgb(30, 3, 53);
+  background: rgb(135, 163, 245);
+ 
+}
+
+.footer__info {
+  display: flex;
+  gap: 20px;
+  font-size: 24px;
+}
+
+footer a {
+    color: rgb(30, 3, 53);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: rgb(18, 63, 24);
+}
+
+.footer-logo {
+  display: block;   
+  margin: 5px 0;
+  width: 80px;
+  height: 30px;
+  background-image: url('./images/rs-logo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: filter 0.5s;
+  filter: invert(10%) sepia(67%) saturate(1222%) hue-rotate(240deg)
+    brightness(105%) contrast(107%);
+}
+
+.footer-logo:hover {
+  filter: invert(15%) sepia(67%) saturate(1222%) hue-rotate(100deg)
+    brightness(105%) contrast(107%);
+}
