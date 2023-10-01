@@ -40,8 +40,8 @@ body {
 
 .car {
     position: absolute;
-    bottom: 0;
-    width: 50px;
+    width: 80px;
+    transform: translateY(75vh);
 }
 
 .tree {
@@ -51,12 +51,12 @@ body {
 
 .tree1 {
    
-    transform: translate(-220px, -15vh);
+    transform: translate(-220px, -20vh);
     width: 300px;
 }
 .tree2 {
     
-    transform: translate(-240px, 25vh);
+    transform: translate(-240px, 20vh);
     width: 350px;
 }
 .tree3 {
