@@ -13,33 +13,8 @@ function game() {
   const car = document.querySelector('.car');
   const carWidth = car.clientWidth / 2;
   const carHeight = car.clientHeight;
-
-  const road = document.querySelector('.road');
-  const roadWidth = road.clientWidth / 2;
-  const roadHeight = road.clientHeight;
-
-  const coin = document.querySelector('.coin');  
-  const coinCoord = getCoords(coin);
-  const coinWidth = coin.clientWidth / 2;
- 
-  
-  const arrow = document.querySelector('.arrow');  
-  const arrowCoord = getCoords(arrow);
-  const arrowWidth = arrow.clientWidth / 2;
-  console.log(arrowWidth);
-
-   const danger = document.querySelector('.danger');
-   console.log(danger);
-   const dangerCoord = getCoords(danger);
-   const dangerWidth = danger.clientWidth / 2;
-   console.log(dangerWidth);
-
-  const trees = document.querySelectorAll('.tree');
-
-  console.log(roadHeight);
-
   const carCoords = getCoords(car);
-  console.log(carCoords);
+  console.log(car);
 
   const carMoveInfo = {
     top: null,
@@ -48,9 +23,28 @@ function game() {
     right: null,
   };
 
-  const treesCoords = [];
+  const road = document.querySelector('.road');
+  const roadWidth = road.clientWidth / 2;
+  const roadHeight = road.clientHeight;
 
-  console.log(carCoords);
+  const coin = document.querySelector('.coin');
+  const coinCoord = getCoords(coin);
+  const coinWidth = coin.clientWidth / 2;
+  const coinHeight = coin.clientHeight;
+
+  const arrow = document.querySelector('.arrow');
+  const arrowCoord = getCoords(arrow);
+  const arrowWidth = arrow.clientWidth / 2;
+  // console.log(arrowWidth);
+
+  const danger = document.querySelector('.danger');
+  console.log(danger);
+  const dangerCoord = getCoords(danger);
+  const dangerWidth = danger.clientWidth / 2;
+  // console.log(dangerWidth);
+
+  const trees = document.querySelectorAll('.tree');
+  const treesCoords = [];
 
   for (let i = 0; i < trees.length; i++) {
     const tree = trees[i];
@@ -59,14 +53,14 @@ function game() {
     treesCoords.push(coordsTree);
   }
 
-  console.log(treesCoords);
+  // console.log(treesCoords);
 
   // логика движения машины : keydown, keyup, keypress
 
   document.addEventListener('keydown', (event) => {
-    if (isPause) {
-      return;
-    }
+    // if (isPause) {
+    //   return;
+    // }
     const code = event.code;
     // WASD
     if (code === 'ArrowUp' && carMoveInfo.top === null) {
@@ -155,6 +149,7 @@ function game() {
   }
 
   function carMove(x, y) {
+    console.log(hasCollision());
     car.style.transform = `translate(${x}px, ${y}px)`;
   }
 
@@ -219,8 +214,6 @@ function game() {
 
   // -----------------coin animation -------------------
 
-  
-
   // --------------get coordinates-----------------
 
   function getCoords(element) {
@@ -233,6 +226,37 @@ function game() {
     const numericX = parseFloat(x);
 
     return { y: numericY, x: numericX };
+  }
+
+  // -----------------------------------------------
+
+  function hasCollision() {
+    const carYTop = carCoords.y - carHeight / 2;
+    const carYBottom = carCoords.y + carHeight;
+
+     const carXLeft = carCoords.x - carWidth;
+     const carXRight = carCoords.x + carWidth;
+
+    const coinYTop = coinCoord.y;
+    const coinYBottom = coinCoord.y + coinHeight;
+
+    const coinXLeft = coinCoord.x - coinWidth;
+    const coinXRight = coinCoord.x + coinWidth;
+
+    console.log(carYTop);
+    console.log(coinYBottom);
+
+    // y
+    if (carYTop  > coinYBottom || carYBottom < coinYTop) {
+      return false;
+    }
+
+    // x
+    if (carXLeft > coinXRight || carXRight < coinXLeft) {
+      return false;
+    }
+
+    return true;
   }
 
   // -----------------------------------------------

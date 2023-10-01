@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   margin: 0 auto;
   background: #6c7b2a;
  /* overflow: hidden; */
@@ -43,6 +43,7 @@ body {
     z-index: 5;
     width: 70px;
     transform: translateY(75vh);
+     border: 1px solid red;
 }
 
 .tree {
@@ -80,7 +81,7 @@ body {
 
 .game-button {
     position: fixed;
-    right: 70px;
+    right: 100px;
     top: 20px;
     background: transparent;
     border: none;
@@ -113,12 +114,17 @@ body {
     position: absolute;
     width: 50px;
     transform: translate(50px, -100px);
+    border: 1px solid green;
 }
 
 .arrow {
     position: absolute;
     width: 50px;
     transform: translate(10px, -600px);
+}
+
+.hide {
+    display: none;
 }
 
 
