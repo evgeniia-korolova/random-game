@@ -18,13 +18,29 @@ function game() {
   const roadWidth = road.clientWidth / 2;
   const roadHeight = road.clientHeight;
 
+  const coin = document.querySelector('.coin');  
+  const coinCoord = getCoords(coin);
+  const coinWidth = coin.clientWidth / 2;
+ 
+  
+  const arrow = document.querySelector('.arrow');  
+  const arrowCoord = getCoords(arrow);
+  const arrowWidth = arrow.clientWidth / 2;
+  console.log(arrowWidth);
+
+   const danger = document.querySelector('.danger');
+   console.log(danger);
+   const dangerCoord = getCoords(danger);
+   const dangerWidth = danger.clientWidth / 2;
+   console.log(dangerWidth);
+
   const trees = document.querySelectorAll('.tree');
 
   console.log(roadHeight);
 
-    const carCoords = getCoords(car);
-    console.log(carCoords);
-    
+  const carCoords = getCoords(car);
+  console.log(carCoords);
+
   const carMoveInfo = {
     top: null,
     bottom: null,
@@ -49,14 +65,14 @@ function game() {
 
   document.addEventListener('keydown', (event) => {
     if (isPause) {
-      return
+      return;
     }
     const code = event.code;
     // WASD
     if (code === 'ArrowUp' && carMoveInfo.top === null) {
-       if (carMoveInfo.bottom) {
-         return;
-       }
+      if (carMoveInfo.bottom) {
+        return;
+      }
       carMoveInfo.top = requestAnimationFrame(carMoveToTop);
     } else if (code === 'ArrowDown' && carMoveInfo.bottom === null) {
       if (carMoveInfo.top) {
@@ -69,9 +85,9 @@ function game() {
       }
       carMoveInfo.left = requestAnimationFrame(carMoveToLeft);
     } else if (code === 'ArrowRight' && carMoveInfo.right === null) {
-       if (carMoveInfo.left) {
-         return;
-       }
+      if (carMoveInfo.left) {
+        return;
+      }
       carMoveInfo.right = requestAnimationFrame(carMoveToRight);
     }
   });
@@ -86,63 +102,61 @@ function game() {
       cancelAnimationFrame(carMoveInfo.bottom);
       carMoveInfo.bottom = null;
     } else if (code === 'ArrowLeft') {
-     
       cancelAnimationFrame(carMoveInfo.left);
       carMoveInfo.left = null;
     } else if (code === 'ArrowRight') {
-     
       cancelAnimationFrame(carMoveInfo.right);
       carMoveInfo.right = null;
     }
   });
-    
-function carMoveToTop() {
-  const newY = carCoords.y - 5;
-  if (newY < 0) {
-    return
-  }
+
+  function carMoveToTop() {
+    const newY = carCoords.y - 5;
+    if (newY < 0) {
+      return;
+    }
     console.log(newY);
-  carCoords.y = newY;
-  carMove(carCoords.x, newY);
-  carMoveInfo.top = requestAnimationFrame(carMoveToTop);
-}
-
-function carMoveToBottom() {
-  const newY = carCoords.y + 5;
-
-  console.log(roadHeight, newY + carHeight);
-  if (newY + carHeight > roadHeight) {
-    return
+    carCoords.y = newY;
+    carMove(carCoords.x, newY);
+    carMoveInfo.top = requestAnimationFrame(carMoveToTop);
   }
-  carCoords.y = newY;
-  carMove(carCoords.x, newY);
-  carMoveInfo.bottom = requestAnimationFrame(carMoveToBottom);
-}
 
-function carMoveToLeft() {
-  const newX = carCoords.x - 5;
-  if (newX < -roadWidth + carWidth - 5) {
-    return
+  function carMoveToBottom() {
+    const newY = carCoords.y + 5;
+
+    console.log(roadHeight, newY + carHeight);
+    if (newY + carHeight > roadHeight) {
+      return;
+    }
+    carCoords.y = newY;
+    carMove(carCoords.x, newY);
+    carMoveInfo.bottom = requestAnimationFrame(carMoveToBottom);
   }
-  console.log(newX);
-  carCoords.x = newX;
-  carMove(newX, carCoords.y);
-  carMoveInfo.left = requestAnimationFrame(carMoveToLeft);
-}
 
-function carMoveToRight() {
-  const newX = carCoords.x + 5;
-   if (newX > roadWidth - carWidth + 5) {
-     return;
-   }
-  carCoords.x = newX;
-  carMove(newX, carCoords.y);
-  carMoveInfo.right = requestAnimationFrame(carMoveToRight);
-}
+  function carMoveToLeft() {
+    const newX = carCoords.x - 5;
+    if (newX < -roadWidth + carWidth - 5) {
+      return;
+    }
+    console.log(newX);
+    carCoords.x = newX;
+    carMove(newX, carCoords.y);
+    carMoveInfo.left = requestAnimationFrame(carMoveToLeft);
+  }
 
-function carMove(x, y) {
-  car.style.transform = `translate(${x}px, ${y}px)`;
-}
+  function carMoveToRight() {
+    const newX = carCoords.x + 5;
+    if (newX > roadWidth - carWidth + 5) {
+      return;
+    }
+    carCoords.x = newX;
+    carMove(newX, carCoords.y);
+    carMoveInfo.right = requestAnimationFrame(carMoveToRight);
+  }
+
+  function carMove(x, y) {
+    car.style.transform = `translate(${x}px, ${y}px)`;
+  }
 
   // ArrowUp, ArrowDown, ArrowLeft, ArrowRight
 
@@ -153,6 +167,9 @@ function carMove(x, y) {
     // console.log(animationId);
     animationId = requestAnimationFrame(startGame);
     treesAnimation();
+    elementAnimation(coin, coinCoord, coinWidth, -100);
+    elementAnimation(danger, dangerCoord, dangerWidth, -250);
+    elementAnimation(arrow, arrowCoord, arrowWidth, -600);
   }
 
   // ----------------trees animation ----------------
@@ -172,8 +189,39 @@ function carMove(x, y) {
       tree.style.transform = `translate(${coords.x}px, ${newYCoord}px)`;
     }
   }
+  // -----------------elements animation ----------------
 
-  // --------------get tree coordinates-----------------
+  function elementAnimation(elem, elemCoord, elemWidth, elemInitialYCoord) {
+    let newYCoord = elemCoord.y + speed;
+    let newXCoord = elemCoord.x;
+
+    if (newYCoord > window.innerHeight) {
+      newYCoord = elemInitialYCoord;
+
+      const direction = parseInt(Math.random() * 2);
+      const maxXCoord = roadWidth + 1 - elemWidth;
+      const randomXCoord = parseInt(Math.random() * maxXCoord);
+
+      // if (direction === 0) { // Двигаем влево
+      //     newXCoord = -randomXCoord;
+      // }
+      // else if (direction === 1) { // Двигаем вправо
+      //     newXCoord = randomXCoord;
+      // }
+
+      newXCoord = direction === 0 ? -randomXCoord : randomXCoord;
+    }
+
+    elemCoord.y = newYCoord;
+    elemCoord.x = newXCoord;
+    elem.style.transform = `translate(${newXCoord}px, ${newYCoord}px)`;
+  }
+
+  // -----------------coin animation -------------------
+
+  
+
+  // --------------get coordinates-----------------
 
   function getCoords(element) {
     const matrix = window.getComputedStyle(element).transform;
