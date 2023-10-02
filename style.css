@@ -127,6 +127,22 @@ body {
     display: none;
 }
 
+.game-score {
+    position: absolute;
+    left: 100px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
+     background-color: #e84112;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    z-index: 15;
+    font-weight: 600;
+    color: white;
+}
 
 
 footer {
