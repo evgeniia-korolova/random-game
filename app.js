@@ -7,8 +7,8 @@ function game() {
   let score = 0;
 
   const gameScore = document.querySelector('.game-score');
-
-
+  const backdrop = document.querySelector('.backdrop');
+  const restartButton = document.querySelector('.restart-button');
 
   // console.log(window);
 
@@ -17,17 +17,15 @@ function game() {
 
   const car = document.querySelector('.car');
 
- const carInfo = {
-   ...createElementInfo(car),
-   move: {
-     top: null,
-     bottom: null,
-     left: null,
-     right: null,
-   },
- };
-
- 
+  const carInfo = {
+    ...createElementInfo(car),
+    move: {
+      top: null,
+      bottom: null,
+      left: null,
+      right: null,
+    },
+  };
 
   const road = document.querySelector('.road');
   const roadWidth = road.clientWidth / 2;
@@ -35,27 +33,24 @@ function game() {
 
   const coin = document.querySelector('.coin');
   const coinInfo = createElementInfo(coin);
-  
 
   const arrow = document.querySelector('.arrow');
-  
+
   const arrowInfo = createElementInfo(arrow);
-  
+
   // console.log(arrowInfo.width);
 
   const danger = document.querySelector('.danger');
   const dangerInfo = createElementInfo(danger);
-  
- 
 
-   function createElementInfo(element) {
-     return {
-       coords: getCoords(element),
-       height: element.clientHeight,
-       width: element.clientWidth / 2,
-       visible: true,
-     };
-   }
+  function createElementInfo(element) {
+    return {
+      coords: getCoords(element),
+      height: element.clientHeight,
+      width: element.clientWidth / 2,
+      visible: true,
+    };
+  }
 
   const trees = document.querySelectorAll('.tree');
   const treesCoords = [];
@@ -67,14 +62,12 @@ function game() {
     treesCoords.push(coordsTree);
   }
 
- 
-
   // логика движения машины : keydown, keyup, keypress
 
   document.addEventListener('keydown', (event) => {
-    // if (isPause) {
-    //   return;
-    // }
+    if (isPause) {
+      return;
+    }
     const code = event.code;
     // WASD
     if (code === 'ArrowUp' && carInfo.move.top === null) {
@@ -146,7 +139,7 @@ function game() {
     if (newX < -roadWidth + carInfo.width - 5) {
       return;
     }
-    
+
     carInfo.coords.x = newX;
     carMove(newX, carInfo.coords.y);
     carInfo.move.left = requestAnimationFrame(carMoveToLeft);
@@ -163,7 +156,6 @@ function game() {
   }
 
   function carMove(x, y) {
-    
     car.style.transform = `translate(${x}px, ${y}px)`;
   }
 
@@ -173,25 +165,30 @@ function game() {
   animationId = requestAnimationFrame(startGame);
 
   function startGame() {
+
+     elementAnimation(danger, dangerInfo, -250);
+
+    if (dangerInfo.visible && hasCollision(carInfo, dangerInfo)) {
+      return finishGame();
+    }
     // console.log(animationId);
     treesAnimation();
     elementAnimation(coin, coinInfo, -100);
 
     if (coinInfo.visible && hasCollision(carInfo, coinInfo)) {
-      console.log('test');
+      
       score++;
       gameScore.innerText = score;
       coin.style.display = 'none';
       coinInfo.visible = false;
 
       if (score % 3 === 0) {
-        speed ++;
+        speed++;
       }
     }
-  // elementAnimation(danger, dangerInfo.coords, dangerInfo.width, -250);
-  //   elementAnimation(arrow, arrowInfo.coords, arrowInfo.width, -600);
-
    
+    
+    //   elementAnimation(arrow, arrowInfo, -600);
 
     animationId = requestAnimationFrame(startGame);
   }
@@ -223,7 +220,7 @@ function game() {
       newYCoord = elemInitialYCoord;
 
       const direction = parseInt(Math.random() * 2);
-      const maxXCoord = (roadWidth + 1 - elemInfo.width);
+      const maxXCoord = roadWidth + 1 - elemInfo.width;
       const randomXCoord = parseInt(Math.random() * maxXCoord);
 
       // if (direction === 0) { // Двигаем влево
@@ -263,11 +260,11 @@ function game() {
   // -----------------------------------------------
 
   function hasCollision(elem1Info, elem2Info) {
-    const carYTop = elem1Info.coords.y - elem1Info.height / 2;
+    const carYTop = elem1Info.coords.y - 30;
     const carYBottom = elem1Info.coords.y + elem1Info.height;
 
-     const carXLeft = elem1Info.coords.x - elem1Info.width;
-     const carXRight = elem1Info.coords.x + elem1Info.width;
+    const carXLeft = elem1Info.coords.x - elem1Info.width;
+    const carXRight = elem1Info.coords.x + elem1Info.width;
 
     const coinYTop = elem2Info.coords.y;
     const coinYBottom = elem2Info.coords.y + elem2Info.height;
@@ -279,7 +276,7 @@ function game() {
     // console.log(coinYBottom);
 
     // y
-    if (carYTop  > coinYBottom || carYBottom < coinYTop) {
+    if (carYTop > coinYBottom || carYBottom < coinYTop) {
       return false;
     }
 
@@ -293,15 +290,34 @@ function game() {
 
   // -----------------------------------------------
 
+  function cancelAnimations() {
+    cancelAnimationFrame(animationId);
+    cancelAnimationFrame(carInfo.move.top);
+    cancelAnimationFrame(carInfo.move.bottom);
+    cancelAnimationFrame(carInfo.move.left);
+    cancelAnimationFrame(carInfo.move.right);
+  }
+
+  // -----------------------------------------------
+
+  function finishGame() {
+    cancelAnimations();
+
+    gameScore.style.display = 'none';
+    gameButton.style.display = 'none';
+    backdrop.style.display = 'flex';
+     const scoreText = backdrop.querySelector('.finish-text-score');
+     scoreText.innerText = score;
+  }
+
+
+  // ------------------------------------------------
+
   const gameButton = document.querySelector('.game-button');
   gameButton.addEventListener('click', () => {
     isPause = !isPause;
     if (isPause) {
-      cancelAnimationFrame(animationId);
-      cancelAnimationFrame(carInfo.move.top);
-      cancelAnimationFrame(carInfo.move.bottom);
-      cancelAnimationFrame(carInfo.move.left);
-      cancelAnimationFrame(carInfo.move.right);
+      cancelAnimations();
       gameButton.children[0].style.display = 'none';
       gameButton.children[1].style.display = 'initial';
     } else {
@@ -310,4 +326,8 @@ function game() {
       gameButton.children[1].style.display = 'none';
     }
   });
+
+   restartButton.addEventListener('click', () => {
+     window.location.reload();
+   });
 }
