@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Game Cars</title>
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/269d9d67d6.js"
+      crossorigin="anonymous"
+    ></script>
+ <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="wrapper">
+    <main class="game-wrapper">
+        <div class="road"></div>
+
+        <img src="./images/car.png" class="car" alt="car">
+
+
+        <img src="./images/tree2.png" class="tree tree1" alt="tree">
+        <img src="./images/tree3.png" class="tree tree2" alt="tree">
+        <img src="./images/tree1.png" class="tree tree3" alt="tree">
+        <img src="./images/tree1.png" class="tree tree4" alt="tree">
+        <img src="./images/tree2.png" class="tree tree5" alt="tree">
+        <img src="./images/tree3.png" class="tree tree6" alt="tree">
+
+
+        <img class="arrow hide" src="./images/arrow.png" alt="arrow"/>
+        <img class="danger" src="./images/danger.png" alt="danger"/>
+        <img class="coin" src="./images/coin.png" alt="coin"/>
+
+         <button type="button" class="game-button">
+           <img class="pause" src="images/pause.png" alt="pause"/>
+            <img class="play" src="images/play.png" alt="play"/>
+        </button>
+
+        <div class="game-score">0</div>
+
+        <div class="backdrop">
+            <div class="backdrop-container">
+                <p class="finish-text">Итоговый счет: <span class="finish-text-score">0</span></p>
+                <button type="button" class="restart-button">Начать заново</button>
+            </div>
+        </div>
+    </main>
+
+     <footer>
+       
+          <div class="footer-item">
+            <div class="footer__info">
+              <p>&copy; Evgeniia</p>
+              <a href="https://github.com/evgeniia-korolova" target="_blank"
+                ><i class="fa-brands fa-github "></i></a>
+            <p>2023</p>
+            </div>
+          </div>
+                    
+            <a class="footer-logo" href="https://rs.school/js-stage0/" title="Rolling Scopes School" target="_blank"></a>                              
+       
+        
+      </footer>
+      </div>
+    <script src="./app.js"></script>
+</body>
+</html>
