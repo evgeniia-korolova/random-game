@@ -168,6 +168,43 @@ body {
     width: 350px;
 }
 
+.statistics {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 50;
+}
+
+.statistics-container {
+    padding: 13px 8px;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+}
+
+ol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+li {
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+
 .finish-text {
     display: flex;
     align-items: center;
@@ -204,7 +241,7 @@ body {
     }
 }
 
-.restart-button {
+.finish-btn {
     cursor: pointer;
     border: none;
     border-radius: 8px;
@@ -213,9 +250,10 @@ body {
     font-size: 20px;
     padding: 8px 25px;
     font-family: Helvetica, sans-serif;
+     margin-top: 10px;
 }
 
-.restart-button:hover {
+.finish-btn:hover {
     background: rgb(177, 14, 104);
 }
 
