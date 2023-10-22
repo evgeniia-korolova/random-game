@@ -8,7 +8,9 @@ function game() {
 
   const gameScore = document.querySelector('.game-score');
   const backdrop = document.querySelector('.backdrop');
-  const restartButton = document.querySelector('.restart-button');
+  const restartButton = document.querySelector('#restart-button');
+  const restartButton2 = document.querySelector('#restart-button2');
+   const audio = document.querySelector('.audio');
 
   // console.log(window);
 
@@ -165,8 +167,8 @@ function game() {
   animationId = requestAnimationFrame(startGame);
 
   function startGame() {
-
-     elementAnimation(danger, dangerInfo, -250);
+    elementAnimation(danger, dangerInfo, -250);
+    audio.play();
 
     if (dangerInfo.visible && hasCollision(carInfo, dangerInfo)) {
       return finishGame();
@@ -176,7 +178,6 @@ function game() {
     elementAnimation(coin, coinInfo, -100);
 
     if (coinInfo.visible && hasCollision(carInfo, coinInfo)) {
-      
       score++;
       gameScore.innerText = score;
       coin.style.display = 'none';
@@ -186,8 +187,7 @@ function game() {
         speed++;
       }
     }
-   
-    
+
     //   elementAnimation(arrow, arrowInfo, -600);
 
     animationId = requestAnimationFrame(startGame);
@@ -306,10 +306,16 @@ function game() {
     gameScore.style.display = 'none';
     gameButton.style.display = 'none';
     backdrop.style.display = 'flex';
-     const scoreText = backdrop.querySelector('.finish-text-score');
-     scoreText.innerText = score;
-  }
+    const scoreText = backdrop.querySelector('.finish-text-score');
+    scoreText.innerText = score;
 
+    let result = JSON.parse(localStorage.getItem('result')) || [];
+    let currentScore = { score: score };
+    result.push(currentScore);
+    localStorage.setItem('result', JSON.stringify(result));
+    showStatistics();
+    audio.pause();
+  }
 
   // ------------------------------------------------
 
@@ -318,6 +324,7 @@ function game() {
     isPause = !isPause;
     if (isPause) {
       cancelAnimations();
+      audio.pause();
       gameButton.children[0].style.display = 'none';
       gameButton.children[1].style.display = 'initial';
     } else {
@@ -327,7 +334,38 @@ function game() {
     }
   });
 
-   restartButton.addEventListener('click', () => {
-     window.location.reload();
-   });
+  restartButton.addEventListener('click', () => {
+    window.location.reload();
+  });
+  restartButton2.addEventListener('click', () => {
+    window.location.reload();
+  });
+
+
+
+  let statistics = document.querySelector('.statistics');
+  function showStatistics() {
+    let list = JSON.parse(localStorage.getItem('result')).slice(-10);
+
+    const listItem = document.createElement('ol');
+
+    statistics.append(listItem);
+
+    const olTag = document.querySelector('.statistics-list');
+    // // let create li tags according to array length for list
+    for (let i = 0; i < list.length; i++) {
+      let liTag = `<li li-index="${i + 1}">               
+                  ${list[i].score}            
+                
+              </li>`;
+      olTag.insertAdjacentHTML('beforeend', liTag);
+    }
+  }
+
+  const statisticsButton = document.querySelector('#statistics-button');
+
+  statisticsButton.addEventListener('click', () => {
+    statistics.style.display = 'flex';
+    backdrop.style.display = 'none';
+  });
 }

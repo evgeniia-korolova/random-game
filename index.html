@@ -17,6 +17,7 @@
 <body>
     <div class="wrapper">
     <main class="game-wrapper">
+      <audio src="./music/Дидюля - Арабика.mp3" class="audio"></audio>
         <div class="road"></div>
 
         <img src="./images/car.png" class="car" alt="car">
@@ -41,12 +42,24 @@
 
         <div class="game-score">0</div>
 
-        <div class="backdrop">
+        <div class="statistics">
+          <div class="statistics-container">
+            <p class="finish-text">Last 10 results</p>
+            <ol class="statistics-list">
+          </ol>
+          <button type="button" id="restart-button2" class="finish-btn">Restart</button>
+          </div>
+          
+        </div>
+
+       <div class="backdrop">
             <div class="backdrop-container">
-                <p class="finish-text">Итоговый счет: <span class="finish-text-score">0</span></p>
-                <button type="button" class="restart-button">Начать заново</button>
+                <p class="finish-text">Result: <span class="finish-text-score">0</span></p>
+                <button type="button" id="restart-button" class="finish-btn">Restart</button>
+                <button type="button" id="statistics-button" class="finish-btn">Show Statistics</button>
             </div>
         </div>
+
     </main>
 
      <footer>
